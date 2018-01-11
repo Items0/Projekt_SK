@@ -44,7 +44,7 @@ namespace Klient
                         clientSocket.Connect(MyList.myList[i].IP, 1235); // --CONNECT()
                         //MessageBox.Show("Udalo sie");
                         NetworkStream serverStream = clientSocket.GetStream();
-                        byte[] outStream = System.Text.Encoding.ASCII.GetBytes("shutdown");
+                        byte[] outStream = System.Text.Encoding.ASCII.GetBytes("shutdownX");
                         serverStream.Write(outStream, 0, outStream.Length);
                         serverStream.Flush();
 
