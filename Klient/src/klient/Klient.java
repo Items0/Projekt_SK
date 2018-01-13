@@ -61,14 +61,11 @@ public class Klient extends javax.swing.JFrame {
 
         jLabel2.setText("Server IP:");
 
-        jTextField1.setText("VM2");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
             }
         });
-
-        jTextField2.setText("192.168.1.104");
 
         jButton1.setText("Add server");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
