@@ -199,14 +199,14 @@ public class Klient extends javax.swing.JFrame {
                 public void run() {
                     try {
                         Socket clientSocket = new Socket(myList.get(i).getIP(), PORT); // stworzenie socket'a
-                        PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-                        out.println("shutdownX"); // wysylanie
+                        PrintWriter out = new PrintWriter(clientSocket.getOutputStream());
+                        out.write("shutdownX"); // wysylanie
+                        out.flush();
                         BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                         String line = new String();
                         do {
-                            line += in.readLine();
-                            System.out.println(line);
-                        } while (line.indexOf('X') == -1); //czytanie tak dlugo, az wczyta 'X'
+                            line += (char) in.read(); // wczytywanie po jednym znaku
+                        } while (line.indexOf('X') == -1); // czytanie tak dlugo, az wczyta 'X'
                         line = line.replace('X', '\0');
                         jTextArea1.setText(myList.get(i).getName() + " Info: " + line + "\n" + jTextArea1.getText());
                         in.close();
@@ -214,7 +214,6 @@ public class Klient extends javax.swing.JFrame {
                         clientSocket.close(); // zamkniecie socket'a
                     } catch (Exception e) {
                         jTextArea1.setText(myList.get(i).getName() + " Error: " + e.getMessage() + "\n" + jTextArea1.getText());
-                        e.printStackTrace();
                     }
                 }
             });
