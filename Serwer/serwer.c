@@ -34,7 +34,7 @@ int main()
         do {
             last = read(new_fd, &(tab[sum]), sizeof(tab)-sum);
             sum += last;
-            printf("--%s-- last: %d, sum: %d\n",tab, last, sum);
+            //printf("--%s-- last: %d, sum: %d\n",tab, last, sum);
             ptr = strchr(tab, 'X');
         }
         while (ptr == NULL); //wczytuje wiadomosc, dopoki napotka na 'X'
