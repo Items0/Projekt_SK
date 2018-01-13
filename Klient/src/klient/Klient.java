@@ -61,11 +61,14 @@ public class Klient extends javax.swing.JFrame {
 
         jLabel2.setText("Server IP:");
 
+        jTextField1.setText("VM2");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
             }
         });
+
+        jTextField2.setText("192.168.1.104");
 
         jButton1.setText("Add server");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -193,28 +196,32 @@ public class Klient extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        int[] selectedIndexes = jList1.getSelectedIndices(); // przekazuje zaznaczone elementy z listy
-        for (int i : selectedIndexes) { // dla kazdego zaznaczonego tworzy funkcje do wywolania
+        int[] selectedIndexes = jList1.getSelectedIndices(); // przekazanie zaznaczononych elementow z listy
+        for (int i : selectedIndexes) { // stworzenie funkcji do wywolania dla kazdego zaznaczonego elementu
             Thread t = new Thread(new Runnable() {
                 public void run() {
                     try {
-                        Socket echoSocket = new Socket(myList.get(i).getIP(), PORT); // tworzy socket'a
-                        PrintWriter out = new PrintWriter(echoSocket.getOutputStream(), true);
-                        out.println("shutdownX"); // wysyla
-                        BufferedReader in = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
-                        String line = "";
+                        Socket clientSocket = new Socket(myList.get(i).getIP(), PORT); // stworzenie socket'a
+                        PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+                        out.println("shutdownX"); // wysylanie
+                        BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                        String line = new String();
                         do {
                             line += in.readLine();
-                        } while (line.indexOf('X') == -1); //czyta tak dlugo, az wczyta 'X'
+                            System.out.println(line);
+                        } while (line.indexOf('X') == -1); //czytanie tak dlugo, az wczyta 'X'
                         line = line.replace('X', '\0');
-                        echoSocket.close(); // zamyka socket'a
                         jTextArea1.setText(myList.get(i).getName() + " Info: " + line + "\n" + jTextArea1.getText());
+                        in.close();
+                        out.close();
+                        clientSocket.close(); // zamkniecie socket'a
                     } catch (Exception e) {
                         jTextArea1.setText(myList.get(i).getName() + " Error: " + e.getMessage() + "\n" + jTextArea1.getText());
+                        e.printStackTrace();
                     }
                 }
             });
-            t.start(); //uruchamia run()
+            t.start(); //uruchomienie run()
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
