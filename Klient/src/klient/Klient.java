@@ -217,7 +217,7 @@ public class Klient extends javax.swing.JFrame {
                     }
                 }
             });
-            t.start(); //uruchomienie run()
+            t.start(); // uruchomienie run()
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 

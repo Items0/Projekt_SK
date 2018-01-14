@@ -37,18 +37,18 @@ int main()
             //printf("--%s-- last: %d, sum: %d\n",tab, last, sum);
             ptr = strchr(tab, 'X');
         }
-        while (ptr == NULL); //wczytuje wiadomosc, dopoki napotka na 'X'
+        while (ptr == NULL); // wczytuje wiadomosc, dopoki odczyta 'X'
         *ptr = '\0';
         printf("%s\n",tab);
-        if (!strcmp(tab, "shutdown")) //komunikat prawidlowy
+        if (!strcmp(tab, "shutdown")) // komunikat prawidlowy
         {
             strcpy(odp, "shutdown confirmX");
             write(new_fd, odp, strlen(odp));
             printf("Confirmation was sent\n");
             close(new_fd);
             close(fd);
-            sleep(5); //tylko po to, aby zdazyc przeczytac konsole
-            execl("/usr/bin/sudo", "/usr/bin/sudo", "/sbin/shutdown", "now", NULL); 
+            sleep(3); // tylko po to, aby zdazyc przeczytac konsole
+            execl("/usr/bin/sudo", "/usr/bin/sudo", "/sbin/shutdown", "now", NULL); // shutdown
         }
 	else //komunikat nieprawidlowy
         {
